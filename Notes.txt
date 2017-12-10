@@ -1,0 +1,15 @@
+Twitter Password:	1qaz2wsx!QAZ@WSX
+Twitter UserName:	eeeDemo123
+
+
+Consumer Key (API Key)	rWtQhhcVEpiVaczrC9YUYU5HN
+Consumer Secret (API Secret)	xoRZVuVomLvDpiy8k1t1LvPv9neaKHXAkE2LevaaiNMZo0PmeL
+
+
+Your Access Token
+This access token can be used to make API requests on your own account's behalf. Do not share your access token secret with anyone.
+Access Token	939804103240073216-gcgSXnmrPiJYVgXecEw2ietUueiOoJX
+Access Token Secret	FyiNJCvu5AT1YrQLzzWfV0xdjBVYZiMcDQWShbevEJiMR
+Access Level	Read and write
+Owner	eeeDemo123
+Owner ID	939804103240073216
