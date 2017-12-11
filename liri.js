@@ -95,5 +95,34 @@ else if(commandName === 'spotify-this-song'){
   });
 
 }
+else if(commandName === 'movie-this'){
+  console.log("Movie!!!!");
+
+
+  // Then run a request to the OMDB API with the movie specified
+  //request("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy", function(error, response, body) {
+    request("http://www.omdbapi.com/?t=" + searchParameters + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
+    // If the request is successful (i.e. if the response status code is 200)
+    if (!error && response.statusCode === 200) {
+  
+      // Parse the body of the site and recover just the imdbRating
+      // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+      console.log("The Title of the move is: " + JSON.parse(body).Title);
+      console.log("The movie's release date is: " + JSON.parse(body).Released);
+      console.log("The movie's IMDB rating is: " + JSON.parse(body).imdbRating);
+      //  For each loop to find the Rotten Tomatoes Rating within the Ratings object
+      for (var key in JSON.parse(body).Ratings)
+      {
+        if((JSON.parse(body).Ratings[key].Source) === 'Rotten Tomatoes'){
+          console.log("The movie's Rotten Tomatoes rating is: " + JSON.parse(body).Ratings[key].Value);
+        }
+      }
+      console.log("Production Country is: " + JSON.parse(body).Country);
+      console.log("Movie Laungage is: " + JSON.parse(body).Language);
+      console.log("The movie's plot is: " + JSON.parse(body).Plot);
+      console.log("The movie's Actors are: " + JSON.parse(body).Actors);
+    }
+  });
+}
 
 console.log("Command entered is " + commandName);
