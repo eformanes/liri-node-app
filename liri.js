@@ -37,40 +37,38 @@ var spotifyStuff = keys[1]
 var request = require("request");
 var twitter = require("twitter");
 var Spotify = require('node-spotify-api');
+var fs = require("fs");
 
 
-//  Actual Execution
-// Twitter case
-if(commandName === 'my-tweets'){  
-  //console.log(twitterStuff);
-  //var twitterQuery = "https://api.twitter.com/1.1/search/tweets.json?q=";
 
+function myTwitter() {
   var twiterClient = new twitter(twitterStuff);
-
-
-
-  var params = {screen_name: 'eeeDemo123'};
-  twiterClient.get('statuses/user_timeline', params, function(error, tweets, response) {
-      if (!error) {
-      //console.log(tweets[0].text);
-
-      //console.log(tweets[0].created_at);
-      console.log("Last tweets from Twitter user " + params.screen_name);
-      //  Loop through the returned tweets array
-      for(var i=0; i< tweets.length; i++){
-        console.log("----------------");
-        console.log("Tweet created " + tweets[i].created_at);
-        console.log("Tweet text: " + tweets[i].text);
+  
+  
+  
+    var params = {screen_name: 'eeeDemo123'};
+    twiterClient.get('statuses/user_timeline', params, function(error, tweets, response) {
+        if (!error) {
+        //console.log(tweets[0].text);
+  
+        //console.log(tweets[0].created_at);
+        console.log("Last tweets from Twitter user " + params.screen_name);
+        //  Loop through the returned tweets array
+        for(var i=0; i< tweets.length; i++){
+          console.log("----------------");
+          console.log("Tweet created " + tweets[i].created_at);
+          console.log("Tweet text: " + tweets[i].text);
+        }
+  
       }
-
-    }
-  });
-
+    });
 }
-else if(commandName === 'spotify-this-song'){
-  console.log(spotifyStuff);
+
+function mySpotify(){
+  //console.log(spotifyStuff);
   var spotify = new Spotify(spotifyStuff);
 
+  // Default to "The Sign" if there are no search terms present
   if(searchParameters === ''){
     searchParameters = 'The+Sign';
   }
@@ -106,7 +104,9 @@ else if(commandName === 'spotify-this-song'){
   });
 
 }
-else if(commandName === 'movie-this'){
+
+function myMovie(){
+  //Default to Mr. Nobody search if search term is blank
   if(searchParameters === ''){
     searchParameters = 'Mr.+Nobody';
   }
@@ -134,6 +134,51 @@ else if(commandName === 'movie-this'){
       console.log("The movie's Actors are: " + JSON.parse(body).Actors);
     }
   });
+}
+
+
+//  Actual Execution
+if(commandName === 'my-tweets'){  
+  myTwitter();
+}
+else if(commandName === 'spotify-this-song'){
+  mySpotify();
+
+}
+else if(commandName === 'movie-this'){
+  myMovie();
+}
+else if(commandName === 'do-what-it-says'){
+  console.log("DO IT!!!!");
+  fs.readFile("random.txt", "utf8", function(err, data){
+      if(err){
+        return console.log(err);
+      }
+
+      data = data.split(",");
+      console.log(data);
+
+      var textCommandName = data[0];
+      searchParameters = data[1];
+
+      console.log("Data 0 is " + data[0]);
+
+      switch(textCommandName){
+        case "my-tweets":
+          myTwitter();
+          break;
+
+        case "spotify-this-song":
+          mySpotify();
+          break;
+
+        case "movie-this":
+          myMovie();
+          break;
+      }
+
+
+  })
 }
 
 console.log("Command entered is " + commandName);
