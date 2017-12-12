@@ -29,13 +29,18 @@ for (var i = 3; i < process.argv.length; i++) {
 // keys file contains all the keys required for this project in an array
 var keys = require("./keys.js");
 // Twitter keys are stored in the first index of the keys array
+// Spotify keys are at [1]
 var twitterStuff = keys[0];
 var spotifyStuff = keys[1]
 
+//  Require packages
 var request = require("request");
 var twitter = require("twitter");
 var Spotify = require('node-spotify-api');
 
+
+//  Actual Execution
+// Twitter case
 if(commandName === 'my-tweets'){  
   //console.log(twitterStuff);
   //var twitterQuery = "https://api.twitter.com/1.1/search/tweets.json?q=";
@@ -66,6 +71,9 @@ else if(commandName === 'spotify-this-song'){
   console.log(spotifyStuff);
   var spotify = new Spotify(spotifyStuff);
 
+  if(searchParameters === ''){
+    searchParameters = 'The+Sign';
+  }
 
   spotify.search({ type: 'track', query: searchParameters }, function(err, data) {
     if (err) {
@@ -85,9 +93,7 @@ else if(commandName === 'spotify-this-song'){
     // below returns name of the album
     //console.log(data.tracks.items[0].album.name);
     
-    if(searchParameters === ''){
-      searchParameters = 'The+Sign';
-    }
+   
 
     console.log("Spotify Search Parameters are " + searchParameters);
     console.log("----------------");
