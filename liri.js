@@ -85,20 +85,26 @@ else if(commandName === 'spotify-this-song'){
     // below returns name of the album
     //console.log(data.tracks.items[0].album.name);
     
+    if(searchParameters === ''){
+      searchParameters = 'The+Sign';
+    }
+
     console.log("Spotify Search Parameters are " + searchParameters);
     console.log("----------------");
     console.log("Artist name is: " + data.tracks.items[0].album.artists[0].name); 
     console.log("Name of song is: " + data.tracks.items[0].name);
-    console.log("Link to album preview: " + data.tracks.items[0].album.external_urls);
+    //console.log("Link to album preview: " + data.tracks.items[0].album.external_urls);
+    console.log("Link to album preview: " + data.tracks.items[0].preview_url);
     console.log("Name of the album is: " + data.tracks.items[0].album.name);
 
   });
 
 }
 else if(commandName === 'movie-this'){
-  console.log("Movie!!!!");
-
-
+  if(searchParameters === ''){
+    searchParameters = 'Mr.+Nobody';
+  }
+  
   // Then run a request to the OMDB API with the movie specified
   //request("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy", function(error, response, body) {
     request("http://www.omdbapi.com/?t=" + searchParameters + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
@@ -106,7 +112,6 @@ else if(commandName === 'movie-this'){
     if (!error && response.statusCode === 200) {
   
       // Parse the body of the site and recover just the imdbRating
-      // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
       console.log("The Title of the move is: " + JSON.parse(body).Title);
       console.log("The movie's release date is: " + JSON.parse(body).Released);
       console.log("The movie's IMDB rating is: " + JSON.parse(body).imdbRating);
